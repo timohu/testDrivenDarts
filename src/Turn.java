@@ -40,34 +40,27 @@ public class Turn {
 		totalPoints = (this.points * this.multiplier);
 	}
 
-	public void setMultiplier() {
-
-	}
-
-	public int calculateRemainingPoints() {
-		return this.temporaryRemainingPoints -= (this.points * this.multiplier);
-	}
-
 	public void processThrow() {
-
-		if(!turnDone){
-			if(isTurnFailed()){
+		if (!turnDone) {
+			if (isGameWin()) {
 				turnDone = true;
-			} else if(isGameWin()){
-				
-			} else if(isSuccesfulThrow()){
-				
+				temporaryRemainingPoints = 0;
+			} else if (isTurnFailed()) {
+				turnDone = true;
+				temporaryRemainingPoints = originalRemainingPoints;
+			} else if (isSuccessfulThrow()) {
+				temporaryRemainingPoints -= totalPoints;
 			}
 		}
 	}
 
 	public boolean isTurnFailed() {
-
 		if (temporaryRemainingPoints < totalPoints) {
-			return true;	
-		} else if((temporaryRemainingPoints - totalPoints) == 1) {
 			return true;
-		} else if((temporaryRemainingPoints - totalPoints) == 0 && this.multiplier != THROW_SINGLE) {
+		} else if ((temporaryRemainingPoints - totalPoints) == 1) {
+			return true;
+		} else if ((temporaryRemainingPoints - totalPoints) == 0 && 
+				this.multiplier == THROW_SINGLE) {
 			return true;
 		} else {
 			return false;
@@ -75,20 +68,33 @@ public class Turn {
 	}
 
 	public boolean isGameWin() {
-		if ((temporaryRemainingPoints - totalPoints) == 0 && this.multiplier != THROW_SINGLE) {
-			return true;
-		} else {
+		int scoreAfterThrow = temporaryRemainingPoints - totalPoints;
+		
+		System.out.println(points);
+		
+		if (scoreAfterThrow != 0) {
 			return false;
+		} else if (points == 25) {
+			return true;
+		} else if (points == 50) {
+			return true;
+		} else if (this.multiplier != THROW_SINGLE) {
+			return true;
 		}
 
+		return false;
 	}
 
-	public boolean isSuccesfulThrow() {
+	public boolean isSuccessfulThrow() {
 		if (temporaryRemainingPoints > totalPoints) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public int getTemporaryRemainingPoints() {
+		return temporaryRemainingPoints;
 	}
 
 }

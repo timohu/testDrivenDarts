@@ -9,7 +9,6 @@ public class Player {
 
 	public void setRemainingPoints(int remainingPoints) {
 		this.remainingPoints = remainingPoints;
-		
 	}
 
 	public int getRemainingPoints() {
