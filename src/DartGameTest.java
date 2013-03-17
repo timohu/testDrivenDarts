@@ -30,9 +30,30 @@ public class DartGameTest {
 	
 	@Test
 	public void throw180() {
-		Turn newTurn = new Turn();
-		newTurn.addThrow(20, Turn.THROW_TRIPLE);
-		newTurn.addThrow(20, Turn.THROW_TRIPLE);
-		newTurn.addThrow(20, Turn.THROW_TRIPLE);
+		Turn turn = new Turn(newGame.getRemainingPoints());
+		
+		turn.throwDart(20, turn.THROW_TRIPLE);
+		turn.throwDart(20, turn.THROW_TRIPLE);
+		turn.throwDart(20, turn.THROW_TRIPLE);
+		
+		newGame.setRemainingPoints(turn.calculateRemainingPoints());		
+		
+		assertTrue(newGame.getRemainingPoints() == 20);
 	}
+	
+	/*@Test
+	public void winGameWithSingle() {
+		Turn turn = new Turn(newGame.getRemainingPoints());
+		
+		newGame.setRemainingPoints(turn.throwDart(20, turn.THROW_TRIPLE));
+		
+		newGame.setRemainingPoints(turn.throwDart(20, turn.THROW_TRIPLE));
+		
+		newGame.setRemainingPoints(turn.throwDart(20, turn.THROW_TRIPLE));
+		
+		newGame.setRemainingPoints(turn.throwDart(20, turn.THROW_SINGLE));
+		
+		assertTrue(newGame.getRemainingPoints() == 20);
+	}*/
+	
 }

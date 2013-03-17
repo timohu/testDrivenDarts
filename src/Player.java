@@ -2,8 +2,8 @@
 public class Player {
 	
 	private int remainingPoints;
+	
 	public Player() {
-		
 		
 	}
 
