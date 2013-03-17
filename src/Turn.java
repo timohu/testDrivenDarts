@@ -24,10 +24,7 @@ public class Turn {
 	}
 
 	public void setTotalPoints(int points, int multiplier) {
-		if ((points > 0 && points < 21) || 
-				points == 25 ||
-				points == 50
-				) {
+		if ((points > 0 && points < 21) || points == 25 || points == 50 ) {
 			this.points = points;
 		}
 
@@ -59,9 +56,6 @@ public class Turn {
 			return true;
 		} else if ((temporaryRemainingPoints - totalPoints) == 1) {
 			return true;
-		} else if ((temporaryRemainingPoints - totalPoints) == 0 && 
-				this.multiplier == THROW_SINGLE) {
-			return true;
 		} else {
 			return false;
 		}
@@ -69,8 +63,6 @@ public class Turn {
 
 	public boolean isGameWin() {
 		int scoreAfterThrow = temporaryRemainingPoints - totalPoints;
-		
-		System.out.println(points);
 		
 		if (scoreAfterThrow != 0) {
 			return false;

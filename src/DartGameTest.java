@@ -42,6 +42,51 @@ public class DartGameTest {
 	}
 	
 	@Test
+	public void throwNegativeExpectFailure() {
+		Turn turn = new Turn(newGame.getRemainingPoints());
+		
+		turn.throwDart(20, Turn.THROW_TRIPLE);
+		turn.throwDart(-10, Turn.THROW_TRIPLE);
+		turn.throwDart(20, Turn.THROW_TRIPLE);
+		
+		newGame.setRemainingPoints(turn.getTemporaryRemainingPoints());		
+		
+		assertTrue(newGame.getRemainingPoints() == 20);
+	}
+	
+	@Test
+	public void throwUnderZeroExpectFailure() {
+		Turn turn = new Turn(newGame.getRemainingPoints());
+		
+		turn.throwDart(20, Turn.THROW_TRIPLE);
+		turn.throwDart(20, Turn.THROW_TRIPLE);
+		turn.throwDart(20, Turn.THROW_TRIPLE);
+		newGame.setRemainingPoints(turn.getTemporaryRemainingPoints());		
+		
+		Turn turnTwo = new Turn(newGame.getRemainingPoints());
+		turnTwo.throwDart(20, Turn.THROW_DOUBLE);
+		newGame.setRemainingPoints(turnTwo.getTemporaryRemainingPoints());
+		
+		assertTrue(newGame.getRemainingPoints() == 20);
+	}
+	
+	@Test
+	public void remainingPointIsOneExpectFailure() {
+		Turn turn = new Turn(newGame.getRemainingPoints());
+		
+		turn.throwDart(20, Turn.THROW_TRIPLE);
+		turn.throwDart(20, Turn.THROW_TRIPLE);
+		turn.throwDart(20, Turn.THROW_TRIPLE);
+		newGame.setRemainingPoints(turn.getTemporaryRemainingPoints());		
+		
+		Turn turnTwo = new Turn(newGame.getRemainingPoints());
+		turnTwo.throwDart(19, Turn.THROW_SINGLE);
+		newGame.setRemainingPoints(turnTwo.getTemporaryRemainingPoints());
+		
+		assertTrue(newGame.getRemainingPoints() == 20);
+	}
+	
+	@Test
 	public void winGameWithSingle() {
 		Turn turn = new Turn(newGame.getRemainingPoints());
 		turn.throwDart(20, Turn.THROW_TRIPLE);
@@ -72,7 +117,7 @@ public class DartGameTest {
 	}
 	
 	@Test
-	public void winGameWithBullseye() {
+	public void winGameWithDoubleBullseye() {
 		Turn turn = new Turn(newGame.getRemainingPoints());
 		turn.throwDart(10, Turn.THROW_TRIPLE);
 		turn.throwDart(10, Turn.THROW_DOUBLE);
@@ -87,6 +132,28 @@ public class DartGameTest {
 
 		Turn turnThree = new Turn(newGame.getRemainingPoints());
 		turnThree.throwDart(50, Turn.THROW_SINGLE);
+		newGame.setRemainingPoints(turnThree.getTemporaryRemainingPoints());
+
+		assertTrue(newGame.getRemainingPoints() == 0);
+	}
+	
+	@Test
+	public void winGameWithSingleBullseye() {
+		Turn turn = new Turn(newGame.getRemainingPoints());
+		turn.throwDart(10, Turn.THROW_TRIPLE);
+		turn.throwDart(10, Turn.THROW_DOUBLE);
+		turn.throwDart(10, Turn.THROW_SINGLE);
+		newGame.setRemainingPoints(turn.getTemporaryRemainingPoints());
+
+		Turn turnTwo = new Turn(newGame.getRemainingPoints());
+		turnTwo.throwDart(20, Turn.THROW_TRIPLE);
+		turnTwo.throwDart(20, Turn.THROW_SINGLE);
+		turnTwo.throwDart(10, Turn.THROW_SINGLE);
+		newGame.setRemainingPoints(turnTwo.getTemporaryRemainingPoints());
+
+		Turn turnThree = new Turn(newGame.getRemainingPoints());
+		turnThree.throwDart(25, Turn.THROW_SINGLE);
+		turnThree.throwDart(25, Turn.THROW_SINGLE);
 		newGame.setRemainingPoints(turnThree.getTemporaryRemainingPoints());
 
 		assertTrue(newGame.getRemainingPoints() == 0);
